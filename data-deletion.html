@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request to Delete Personal Data - Coffee Map</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(to bottom, #F0F8FF, #E6F3FF);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .language-switcher {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .language-switcher button {
+            background: linear-gradient(135deg, #4A90E2, #2C5F8D);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            margin: 0 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+        }
+        
+        .language-switcher button:hover {
+            background: linear-gradient(135deg, #2C5F8D, #1A4566);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
+        }
+        
+        .language-switcher button.active {
+            background: linear-gradient(135deg, #5CB85C, #4CAF50);
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+        }
+        
+        .content {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .language-content {
+            display: none;
+        }
+        
+        .language-content.active {
+            display: block;
+        }
+        
+        h1 {
+            color: #2C5F8D;
+            background: linear-gradient(135deg, #2C5F8D, #4A90E2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+            font-weight: 700;
+        }
+        
+        h2 {
+            color: #2C5F8D;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            border-bottom: 3px solid;
+            border-image: linear-gradient(to right, #2C5F8D, #4A90E2) 1;
+            padding-bottom: 8px;
+        }
+        
+        h3 {
+            color: #2C5F8D;
+            margin-top: 20px;
+            margin-bottom: 12px;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        .intro {
+            background: linear-gradient(135deg, #E6F3FF, #D9EBFF);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border-left: 4px solid #4A90E2;
+        }
+        
+        .steps-box {
+            background: #F9FCFF;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 2px solid #D9EBFF;
+        }
+        
+        .step {
+            display: flex;
+            margin-bottom: 20px;
+            align-items: flex-start;
+        }
+        
+        .step-number {
+            background: linear-gradient(135deg, #4A90E2, #2C5F8D);
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+            margin-right: 15px;
+            font-size: 1.1em;
+        }
+        
+        .step-content {
+            flex: 1;
+            padding-top: 5px;
+        }
+        
+        .step-content strong {
+            color: #2C5F8D;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 10px;
+        }
+        
+        li::marker {
+            color: #4A90E2;
+        }
+        
+        .data-category {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #4CAF50;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .data-category.retained {
+            border-left-color: #FF9800;
+        }
+        
+        .data-category h3 {
+            color: #4CAF50;
+            margin-top: 0;
+        }
+        
+        .data-category.retained h3 {
+            color: #FF9800;
+        }
+        
+        .contact {
+            background: linear-gradient(135deg, #E6F3FF, #D9EBFF);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+            text-align: center;
+            border: 2px solid #4A90E2;
+        }
+        
+        .contact h3 {
+            margin-top: 0;
+            color: #2C5F8D;
+        }
+        
+        .contact a {
+            color: #2C5F8D;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+        
+        .contact a:hover {
+            color: #4A90E2;
+            text-decoration: underline;
+        }
+        
+        .email-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #4A90E2, #2C5F8D);
+            color: white;
+            padding: 15px 35px;
+            border-radius: 8px;
+            text-decoration: none;
+            margin: 15px 0;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+        }
+        
+        .email-button:hover {
+            background: linear-gradient(135deg, #2C5F8D, #1A4566);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
+        }
+        
+        .timeline {
+            background: #FFF9E6;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #FFB830;
+        }
+        
+        .timeline strong {
+            color: #F97936;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            padding: 20px;
+            color: #666;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .step {
+                flex-direction: column;
+            }
+            
+            .step-number {
+                margin-bottom: 10px;
+            }
+            
+            .language-switcher button {
+                margin: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="language-switcher">
+            <button onclick="switchLanguage('en')" id="btn-en" class="active">English</button>
+            <button onclick="switchLanguage('ko')" id="btn-ko">한국어 (Korean)</button>
+        </div>
+        
+        <div class="content">
+            <!-- English Version -->
+            <div id="content-en" class="language-content active">
+                <h1>Request to Delete Personal Data from Coffee Map</h1>
+                
+                <div class="intro">
+                    <p>We respect your privacy and your right to control your personal data. If you wish to delete your personal information from Coffee Map, please follow the steps below.</p>
+                </div>
+                
+                <h2>How to Request Data Deletion</h2>
+                
+                <div class="steps-box">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <strong>Send an Email</strong>
+                            <p>Send an email to <a href="mailto:support@coffeemap.app" style="color: #4A90E2; font-weight: 600;">support@coffeemap.app</a> with the subject line <strong>"Delete my data"</strong>.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <strong>Specify Data Type</strong>
+                            <p>In your email, please specify the type(s) of data you wish to delete. You can choose from:</p>
+                            <ul>
+                                <li>Reviews and uploaded photos</li>
+                                <li>Profile information (nickname, Kakao email)</li>
+                                <li>Analytics and activity data</li>
+                                <li>All of the above</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <strong>Wait for Processing</strong>
+                            <p>Your request will be reviewed and processed within <strong>7 business days</strong>.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline">
+                    <strong>⏱️ Processing Time:</strong> Your data deletion request will be completed within 7 business days from the date we receive your email.
+                </div>
+                
+                <h2>Data Categories</h2>
+                
+                <h3>Data That Can Be Deleted</h3>
+                <div class="data-category">
+                    <h3>✓ Deletable Data</h3>
+                    <ul>
+                        <li><strong>Reviews and Uploaded Photos:</strong> All reviews you've written and photos you've uploaded to Coffee Map</li>
+                        <li><strong>Profile Information:</strong> Your nickname, Kakao email, and other profile details</li>
+                        <li><strong>Analytics and Activity Data:</strong> Data about your app usage, preferences, and interactions</li>
+                    </ul>
+                </div>
+                
+                <h3>Data That May Be Retained</h3>
+                <div class="data-category retained">
+                    <h3>⚠️ Data Retained for Security</h3>
+                    <p><strong>Minimal Log Data:</strong> We may retain minimal log data for security and fraud prevention purposes for up to 30 days. This data is anonymized and cannot be used to identify you personally.</p>
+                </div>
+                
+                <h2>Important Information</h2>
+                <ul>
+                    <li>Once your data is deleted, it <strong>cannot be recovered</strong>. Please ensure you want to proceed before submitting your request.</li>
+                    <li>After deletion, you may need to create a new account if you wish to use Coffee Map again.</li>
+                    <li>Some data may be retained as required by law or for legitimate business purposes (e.g., security logs).</li>
+                </ul>
+                
+                <div class="contact">
+                    <h3>Contact Us</h3>
+                    <p>If you have any questions or concerns about data deletion, please contact us:</p>
+                    <a href="mailto:support@coffeemap.app" class="email-button">📧 support@coffeemap.app</a>
+                </div>
+            </div>
+            
+            <!-- Korean Version -->
+            <div id="content-ko" class="language-content">
+                <h1>Coffee Map 개인 데이터 삭제 요청</h1>
+                
+                <div class="intro">
+                    <p>저희는 귀하의 개인정보 보호와 개인 데이터를 통제할 권리를 존중합니다. Coffee Map에서 개인 정보를 삭제하고자 하신다면 아래 단계를 따라주세요.</p>
+                </div>
+                
+                <h2>데이터 삭제 요청 방법</h2>
+                
+                <div class="steps-box">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <strong>이메일 보내기</strong>
+                            <p><a href="mailto:support@coffeemap.app" style="color: #4A90E2; font-weight: 600;">support@coffeemap.app</a>로 제목을 <strong>"Delete my data"</strong>로 하여 이메일을 보내주세요.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <strong>데이터 유형 지정</strong>
+                            <p>이메일에 삭제하고자 하는 데이터 유형을 명시해 주세요. 다음 중에서 선택할 수 있습니다:</p>
+                            <ul>
+                                <li>리뷰 및 업로드한 사진</li>
+                                <li>프로필 정보 (닉네임, 카카오 이메일)</li>
+                                <li>분석 및 활동 데이터</li>
+                                <li>위의 모든 항목</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <strong>처리 대기</strong>
+                            <p>귀하의 요청은 <strong>7 영업일</strong> 이내에 검토 및 처리됩니다.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline">
+                    <strong>⏱️ 처리 시간:</strong> 데이터 삭제 요청은 이메일 수신일로부터 7 영업일 이내에 완료됩니다.
+                </div>
+                
+                <h2>데이터 카테고리</h2>
+                
+                <h3>삭제 가능한 데이터</h3>
+                <div class="data-category">
+                    <h3>✓ 삭제 가능한 데이터</h3>
+                    <ul>
+                        <li><strong>리뷰 및 업로드한 사진:</strong> Coffee Map에 작성한 모든 리뷰와 업로드한 사진</li>
+                        <li><strong>프로필 정보:</strong> 닉네임, 카카오 이메일 및 기타 프로필 상세 정보</li>
+                        <li><strong>분석 및 활동 데이터:</strong> 앱 사용, 선호도 및 상호작용에 대한 데이터</li>
+                    </ul>
+                </div>
+                
+                <h3>보관될 수 있는 데이터</h3>
+                <div class="data-category retained">
+                    <h3>⚠️ 보안을 위해 보관되는 데이터</h3>
+                    <p><strong>최소한의 로그 데이터:</strong> 보안 및 사기 방지 목적으로 최대 30일간 최소한의 로그 데이터를 보관할 수 있습니다. 이 데이터는 익명화되어 개인 식별에 사용될 수 없습니다.</p>
+                </div>
+                
+                <h2>중요 정보</h2>
+                <ul>
+                    <li>데이터가 삭제되면 <strong>복구할 수 없습니다</strong>. 요청을 제출하기 전에 진행하고자 하는지 확인해 주세요.</li>
+                    <li>삭제 후 Coffee Map을 다시 사용하려면 새 계정을 만들어야 할 수 있습니다.</li>
+                    <li>일부 데이터는 법률에 따라 또는 합법적인 비즈니스 목적(예: 보안 로그)으로 보관될 수 있습니다.</li>
+                </ul>
+                
+                <div class="contact">
+                    <h3>문의하기</h3>
+                    <p>데이터 삭제에 대한 질문이나 우려 사항이 있으시면 문의해 주세요:</p>
+                    <a href="mailto:support@coffeemap.app" class="email-button">📧 support@coffeemap.app</a>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© Coffee Map — Protecting Your Privacy</p>
+        </footer>
+    </div>
+    
+    <script>
+        function switchLanguage(lang) {
+            // Hide all content
+            document.querySelectorAll('.language-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.language-switcher button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected content
+            document.getElementById('content-' + lang).classList.add('active');
+            document.getElementById('btn-' + lang).classList.add('active');
+        }
+    </script>
+</body>
+</html>

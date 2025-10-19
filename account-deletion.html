@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request to Delete Coffee Map Account</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(to bottom, #FFF0F0, #FFE6E6);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .language-switcher {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .language-switcher button {
+            background: linear-gradient(135deg, #F44336, #D32F2F);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            margin: 0 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(244, 67, 54, 0.3);
+        }
+        
+        .language-switcher button:hover {
+            background: linear-gradient(135deg, #D32F2F, #B71C1C);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(244, 67, 54, 0.4);
+        }
+        
+        .language-switcher button.active {
+            background: linear-gradient(135deg, #FF9800, #F57C00);
+            box-shadow: 0 4px 15px rgba(255, 152, 0, 0.4);
+        }
+        
+        .content {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .language-content {
+            display: none;
+        }
+        
+        .language-content.active {
+            display: block;
+        }
+        
+        h1 {
+            color: #D32F2F;
+            background: linear-gradient(135deg, #D32F2F, #F44336);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+            font-weight: 700;
+        }
+        
+        h2 {
+            color: #C62828;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            border-bottom: 3px solid;
+            border-image: linear-gradient(to right, #D32F2F, #F44336) 1;
+            padding-bottom: 8px;
+        }
+        
+        h3 {
+            color: #C62828;
+            margin-top: 20px;
+            margin-bottom: 12px;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        .warning-box {
+            background: linear-gradient(135deg, #FFF3E0, #FFE0B2);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border-left: 4px solid #FF9800;
+        }
+        
+        .warning-box strong {
+            color: #E65100;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .steps-box {
+            background: #FFF5F5;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 2px solid #FFCDD2;
+        }
+        
+        .step {
+            display: flex;
+            margin-bottom: 20px;
+            align-items: flex-start;
+        }
+        
+        .step-number {
+            background: linear-gradient(135deg, #F44336, #D32F2F);
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+            margin-right: 15px;
+            font-size: 1.1em;
+        }
+        
+        .step-content {
+            flex: 1;
+            padding-top: 5px;
+        }
+        
+        .step-content strong {
+            color: #C62828;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 10px;
+        }
+        
+        li::marker {
+            color: #F44336;
+        }
+        
+        .data-category {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #F44336;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .data-category.retained {
+            border-left-color: #FF9800;
+            background: #FFF8E1;
+        }
+        
+        .data-category h3 {
+            color: #D32F2F;
+            margin-top: 0;
+        }
+        
+        .data-category.retained h3 {
+            color: #E65100;
+        }
+        
+        .contact {
+            background: linear-gradient(135deg, #FFEBEE, #FFCDD2);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+            text-align: center;
+            border: 2px solid #F44336;
+        }
+        
+        .contact h3 {
+            margin-top: 0;
+            color: #C62828;
+        }
+        
+        .contact a {
+            color: #D32F2F;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+        
+        .contact a:hover {
+            color: #F44336;
+            text-decoration: underline;
+        }
+        
+        .email-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #F44336, #D32F2F);
+            color: white;
+            padding: 15px 35px;
+            border-radius: 8px;
+            text-decoration: none;
+            margin: 15px 0;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(244, 67, 54, 0.3);
+        }
+        
+        .email-button:hover {
+            background: linear-gradient(135deg, #D32F2F, #B71C1C);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(244, 67, 54, 0.4);
+            color: white;
+        }
+        
+        .timeline {
+            background: #E3F2FD;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #2196F3;
+        }
+        
+        .timeline strong {
+            color: #1976D2;
+        }
+        
+        .important-note {
+            background: #FFEBEE;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #F44336;
+        }
+        
+        .important-note h3 {
+            margin-top: 0;
+            color: #C62828;
+        }
+        
+        .important-note ul {
+            margin-top: 10px;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            padding: 20px;
+            color: #666;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .step {
+                flex-direction: column;
+            }
+            
+            .step-number {
+                margin-bottom: 10px;
+            }
+            
+            .language-switcher button {
+                margin: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="language-switcher">
+            <button onclick="switchLanguage('en')" id="btn-en" class="active">English</button>
+            <button onclick="switchLanguage('ko')" id="btn-ko">한국어 (Korean)</button>
+        </div>
+        
+        <div class="content">
+            <!-- English Version -->
+            <div id="content-en" class="language-content active">
+                <h1>Request to Delete Coffee Map Account</h1>
+                
+                <div class="warning-box">
+                    <strong>⚠️ Important Warning</strong>
+                    <p>Deleting your Coffee Map account is <strong>permanent and irreversible</strong>. All your data, including reviews, photos, and profile information, will be permanently deleted. Please make sure you want to proceed before submitting your request.</p>
+                </div>
+                
+                <h2>How to Delete Your Account</h2>
+                
+                <div class="steps-box">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <strong>Send a Deletion Request Email</strong>
+                            <p>Send an email to <a href="mailto:support@coffeemap.app" style="color: #F44336; font-weight: 600;">support@coffeemap.app</a> with the subject line <strong>"Delete my Coffee Map account"</strong>.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <strong>Include Your Kakao Account Email</strong>
+                            <p>In the email body, please include the <strong>Kakao account email</strong> you used to log in to Coffee Map. This helps us verify your identity and locate your account.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <strong>Account Deletion Processing</strong>
+                            <p>Your account and all associated data (reviews, photos, analytics records) will be <strong>permanently deleted within 7 days</strong>.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline">
+                    <strong>⏱️ Processing Time:</strong> Your account deletion request will be completed within 7 days from the date we receive and verify your email.
+                </div>
+                
+                <h2>What Data Will Be Deleted</h2>
+                
+                <div class="data-category">
+                    <h3>🗑️ Data That Will Be Permanently Deleted</h3>
+                    <ul>
+                        <li><strong>Profile Information:</strong> Your name, email, Kakao ID, and all profile details</li>
+                        <li><strong>Reviews:</strong> All reviews you've written on Coffee Map</li>
+                        <li><strong>Uploaded Photos:</strong> All photos you've uploaded to the platform</li>
+                        <li><strong>Analytics and Activity Logs:</strong> All records of your app usage and interactions</li>
+                    </ul>
+                </div>
+                
+                <div class="data-category retained">
+                    <h3>📋 Data That May Be Retained (For Security/Legal Purposes)</h3>
+                    <p><strong>Basic Log Records:</strong> Minimal, anonymized log data may be retained for security and legal compliance purposes for up to <strong>30 days</strong>. This data cannot be used to identify you personally and will be automatically deleted after 30 days.</p>
+                </div>
+                
+                <div class="important-note">
+                    <h3>⚠️ Before You Delete Your Account</h3>
+                    <ul>
+                        <li><strong>Backup Your Data:</strong> Make sure to save any reviews, photos, or information you want to keep before requesting deletion</li>
+                        <li><strong>This Action is Irreversible:</strong> Once your account is deleted, it cannot be recovered</li>
+                        <li><strong>Create a New Account:</strong> If you wish to use Coffee Map again, you will need to create a new account from scratch</li>
+                        <li><strong>Pending Transactions:</strong> Ensure you have no pending activities or transactions before deletion</li>
+                    </ul>
+                </div>
+                
+                <h2>Need Help?</h2>
+                <p>If you're experiencing issues with your account or the app, please consider contacting our support team before deleting your account. We may be able to help resolve your concerns.</p>
+                
+                <div class="contact">
+                    <h3>Contact Us</h3>
+                    <p>To delete your account or if you have questions, please contact us:</p>
+                    <a href="mailto:support@coffeemap.app?subject=Delete%20my%20Coffee%20Map%20account" class="email-button">📧 support@coffeemap.app</a>
+                    <p style="margin-top: 15px; font-size: 0.9em; color: #666;">
+                        Include your Kakao account email in your message
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Korean Version -->
+            <div id="content-ko" class="language-content">
+                <h1>Coffee Map 계정 삭제 요청</h1>
+                
+                <div class="warning-box">
+                    <strong>⚠️ 중요 경고</strong>
+                    <p>Coffee Map 계정 삭제는 <strong>영구적이며 되돌릴 수 없습니다</strong>. 리뷰, 사진 및 프로필 정보를 포함한 모든 데이터가 영구적으로 삭제됩니다. 요청을 제출하기 전에 진행하고자 하는지 확인해 주세요.</p>
+                </div>
+                
+                <h2>계정 삭제 방법</h2>
+                
+                <div class="steps-box">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <strong>삭제 요청 이메일 보내기</strong>
+                            <p><a href="mailto:support@coffeemap.app" style="color: #F44336; font-weight: 600;">support@coffeemap.app</a>로 제목을 <strong>"Delete my Coffee Map account"</strong>로 하여 이메일을 보내주세요.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <strong>카카오 계정 이메일 포함</strong>
+                            <p>이메일 본문에 Coffee Map 로그인에 사용한 <strong>카카오 계정 이메일</strong>을 포함해 주세요. 이는 신원 확인 및 계정 위치 파악에 도움이 됩니다.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <strong>계정 삭제 처리</strong>
+                            <p>귀하의 계정과 모든 관련 데이터(리뷰, 사진, 분석 기록)는 <strong>7일 이내에 영구적으로 삭제</strong>됩니다.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline">
+                    <strong>⏱️ 처리 시간:</strong> 계정 삭제 요청은 이메일 수신 및 확인일로부터 7일 이내에 완료됩니다.
+                </div>
+                
+                <h2>삭제될 데이터</h2>
+                
+                <div class="data-category">
+                    <h3>🗑️ 영구적으로 삭제될 데이터</h3>
+                    <ul>
+                        <li><strong>프로필 정보:</strong> 이름, 이메일, 카카오 ID 및 모든 프로필 상세 정보</li>
+                        <li><strong>리뷰:</strong> Coffee Map에 작성한 모든 리뷰</li>
+                        <li><strong>업로드한 사진:</strong> 플랫폼에 업로드한 모든 사진</li>
+                        <li><strong>분석 및 활동 로그:</strong> 앱 사용 및 상호작용의 모든 기록</li>
+                    </ul>
+                </div>
+                
+                <div class="data-category retained">
+                    <h3>📋 보관될 수 있는 데이터 (보안/법적 목적)</h3>
+                    <p><strong>기본 로그 기록:</strong> 보안 및 법적 준수 목적으로 최소한의 익명화된 로그 데이터가 최대 <strong>30일</strong>간 보관될 수 있습니다. 이 데이터는 개인 식별에 사용될 수 없으며 30일 후 자동으로 삭제됩니다.</p>
+                </div>
+                
+                <div class="important-note">
+                    <h3>⚠️ 계정을 삭제하기 전에</h3>
+                    <ul>
+                        <li><strong>데이터 백업:</strong> 삭제를 요청하기 전에 보관하고 싶은 리뷰, 사진 또는 정보를 저장해 두세요</li>
+                        <li><strong>이 작업은 되돌릴 수 없습니다:</strong> 계정이 삭제되면 복구할 수 없습니다</li>
+                        <li><strong>새 계정 생성:</strong> Coffee Map을 다시 사용하려면 처음부터 새 계정을 만들어야 합니다</li>
+                        <li><strong>보류 중인 거래:</strong> 삭제 전에 보류 중인 활동이나 거래가 없는지 확인하세요</li>
+                    </ul>
+                </div>
+                
+                <h2>도움이 필요하신가요?</h2>
+                <p>계정이나 앱에 문제가 있는 경우 계정을 삭제하기 전에 지원팀에 문의하는 것을 고려해 주세요. 우려 사항을 해결하는 데 도움을 드릴 수 있습니다.</p>
+                
+                <div class="contact">
+                    <h3>문의하기</h3>
+                    <p>계정을 삭제하거나 질문이 있으시면 문의해 주세요:</p>
+                    <a href="mailto:support@coffeemap.app?subject=Delete%20my%20Coffee%20Map%20account" class="email-button">📧 support@coffeemap.app</a>
+                    <p style="margin-top: 15px; font-size: 0.9em; color: #666;">
+                        메시지에 카카오 계정 이메일을 포함해 주세요
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© Coffee Map — Your Privacy, Your Choice</p>
+        </footer>
+    </div>
+    
+    <script>
+        function switchLanguage(lang) {
+            // Hide all content
+            document.querySelectorAll('.language-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.language-switcher button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected content
+            document.getElementById('content-' + lang).classList.add('active');
+            document.getElementById('btn-' + lang).classList.add('active');
+        }
+    </script>
+</body>
+</html>
